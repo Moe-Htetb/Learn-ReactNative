@@ -4,7 +4,9 @@ import { Link } from "expo-router";
 const HomePage = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Product Lists</Text>
+      <Text style={{ fontSize: 20, fontFamily: "JetBrainsMono" }}>
+        Product Lists
+      </Text>
       <Link href={{ pathname: "/detail", params: { id: 9 } }}>
         go to product detail
       </Link>

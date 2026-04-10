@@ -8,6 +8,7 @@ const HomePage = () => {
       <Link href={{ pathname: "/detail", params: { id: 9 } }}>
         go to product detail
       </Link>
+      <Link href="/setting/123">go to profile setting </Link>
     </View>
   );
 };

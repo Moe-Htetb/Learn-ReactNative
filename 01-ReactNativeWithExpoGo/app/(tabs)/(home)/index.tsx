@@ -5,7 +5,9 @@ const HomePage = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Product Lists</Text>
-      <Link href="/detail">go to product detail</Link>
+      <Link href={{ pathname: "/detail", params: { id: 9 } }}>
+        go to product detail
+      </Link>
     </View>
   );
 };

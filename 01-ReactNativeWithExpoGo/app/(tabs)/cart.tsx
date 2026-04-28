@@ -1,43 +1,36 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { Button, Text, TextInput } from "react-native";
+import { useState } from "react";
 import {
-  //   SafeAreaView,
-  useSafeAreaInsets,
+  SafeAreaView,
+  // useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Image } from "expo-image";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CartScreen() {
-  const insets = useSafeAreaInsets();
+  const [name, setName] = useState("");
+  const saveToSecureStorage = async () => {
+    try {
+      if (name) {
+        await AsyncStorage.setItem("name", name);
+        alert("Name saved to secure storage");
+      } else {
+        alert("Please enter a name");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    //<SafeAreaView></SafeAreaView> can use this instead of View
-    <ScrollView>
-      <View style={{ flex: 1, paddingTop: insets.top }}>
-        <Text>CartScreen</Text>
-        <Image
-          source={
-            // uri: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
-            require("../../assets/images/react-logo.png")
-          }
-          style={{ width: 200, height: 200 }}
-        />
-        <Image
-          // source={require("../../assets/images/light.png")}
-          source={{ uri: "light " }}
-          style={{ width: 200, height: 200 }}
-        />
-        {/* <Image
-          source={require("../../assets/images/light.png")}
-          style={{ width: 200, height: 200 }}
-        />
-        <Image
-          source={require("../../assets/images/light.png")}
-          style={{ width: 200, height: 200 }}
-        />
-        <Image
-          source={require("../../assets/images/light.png")}
-          style={{ width: 200, height: 200 }}
-        /> */}
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <Text>{name}</Text>
+      <TextInput
+        placeholder="Enter your name"
+        value={name}
+        onChangeText={(val) => setName(val)}
+        style={{ borderWidth: 1, height: 40, margin: 10, padding: 10 }}
+      />
+      <Button title="Save to Secure storage" onPress={saveToSecureStorage} />
+    </SafeAreaView>
   );
 }

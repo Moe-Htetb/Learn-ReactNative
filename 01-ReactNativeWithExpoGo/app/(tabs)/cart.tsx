@@ -1,40 +1,33 @@
-import { Button, StyleSheet, Text, TextInput } from "react-native";
+import { Button, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
 import {
   SafeAreaView,
   // useSafeAreaInsets,
 } from "react-native-safe-area-context";
-
-import * as SecureStore from "expo-secure-store";
+import { useMMKVStorage } from "react-native-mmkv-storage";
+import { tokenStorage, userStorage } from "@/mmkv/store";
 
 export default function CartScreen() {
-  const [formState, setFormState] = useState<{ name: string; age: number }>({
-    name: "",
-    age: 0,
-  });
-  const saveToSecureStorage = async () => {
-    try {
-      SecureStore.setItemAsync("userInfo", JSON.stringify(formState));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [name, setName] = useState("");
+  const [token, setToken] = useMMKVStorage("token", tokenStorage, "");
+  const [user, setUser] = useMMKVStorage("user", userStorage, "");
   return (
     <SafeAreaView>
       <TextInput
         placeholder="Enter your name"
-        value={formState?.name}
-        onChangeText={(val) => setFormState({ ...formState, name: val })}
         style={style.input}
+        defaultValue={name}
+        onChangeText={(val) => setName(val)}
       />
+      <Button title="save to mmkv" onPress={() => setUser(name)} />
 
-      <TextInput
-        placeholder="Enter your age"
-        value={formState?.age.toString()}
-        onChangeText={(val) => setFormState({ ...formState, age: +val })}
-        style={style.input}
+      <TextInput placeholder="Enter your age" style={style.input} />
+      <Button
+        title="Save to token storage"
+        onPress={() => {
+          setToken("123");
+        }}
       />
-      <Button title="Save to Secure storage" onPress={saveToSecureStorage} />
     </SafeAreaView>
   );
 }

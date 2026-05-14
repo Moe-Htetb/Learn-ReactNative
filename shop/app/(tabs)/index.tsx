@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
@@ -25,13 +26,20 @@ const index = () => {
         />
       </View>
       <Title title="Shop By Category" btnText="See All" />
-      <ScrollView horizontal>
+      {/* <ScrollView horizontal>
         <View style={{ flexDirection: "row", paddingHorizontal: 8 }}>
           {categories.map(({ id, name, image }) => (
             <Category key={id} name={name} image={image} />
           ))}
         </View>
-      </ScrollView>
+      </ScrollView> */}
+      <FlashList
+        data={categories}
+        renderItem={({ item }) => <Category {...item} />}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </SafeAreaView>
   );
 };

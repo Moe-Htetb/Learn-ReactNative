@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import Cart from "@/components/shop/Cart";
@@ -8,7 +8,11 @@ import Title from "@/components/shop/Title";
 import Category from "@/components/shop/Category";
 import { categories } from "@/data";
 
-const index = () => {
+const Index = () => {
+  const [select, setSelect] = useState(1);
+  const handleSelect = (id: number) => {
+    setSelect(id);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -35,16 +39,20 @@ const index = () => {
       </ScrollView> */}
       <FlashList
         data={categories}
-        renderItem={({ item }) => <Category {...item} />}
+        renderItem={({ item }) => (
+          <Category {...item} select={select} handleSelect={handleSelect} />
+        )}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
+        style={styles.categoryContainer}
       />
+      <Title title="Explore More" btnText="See All" />
     </SafeAreaView>
   );
 };
 
-export default index;
+export default Index;
 
 const styles = StyleSheet.create({
   container: {
@@ -64,5 +72,10 @@ const styles = StyleSheet.create({
   heroSectionImage: {
     width: "100%",
     aspectRatio: 20 / 9,
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 8,
   },
 });

@@ -21,7 +21,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   titleContainer: {
-    marginVertical: 16,
+    marginVertical: 20,
     marginHorizontal: 12,
     flexDirection: "row",
     justifyContent: "space-between",
